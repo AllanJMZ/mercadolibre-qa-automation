@@ -4,7 +4,7 @@ import stealth from 'puppeteer-extra-plugin-stealth';
 
 chromium.use(stealth());
 
-export async function launchStealthContext(userDataDir: string) {
+export async function launchStealthContext(userDataDir: string, options: any = {}) {
   return await chromium.launchPersistentContext(userDataDir, {
     headless: false,
     viewport: null,

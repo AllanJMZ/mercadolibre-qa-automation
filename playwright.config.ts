@@ -20,11 +20,15 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    viewport: null,
+    launchOptions: {
+      args: ['--start-maximized'] // Útil para modo headed
+    },
     screenshot: 'only-on-failure',
     trace: 'on',
     //Abrir nuevo navegador para persuadir la automatizacion y el sistema Anti-bot de la pagina
@@ -33,21 +37,23 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    /*
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-      /*
+    /*
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
     },
-
+    */
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
     },
-      */
+    
+      
     /* Test against mobile viewports. */
     // {
     //   name: 'Mobile Chrome',

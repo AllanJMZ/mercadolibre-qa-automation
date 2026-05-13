@@ -2,10 +2,9 @@ import { test, expect } from '@playwright/test';
 import { ProductCatalogPage } from '../pages/ProductCatalogPage';
 import { launchStealthContext } from '../utils/browserFactory';
 
-const userDataDir = 'C:/Users/LazYW/Documents/user_data';
 
 test('Escenario: Validaciones de Calidad (Visual, Accesibilidad y Perf)', async () => {
-    const userDataDir = 'C:/Users/LazYW/Documents/user_data';
+    const userDataDir = './user_data';
     const context = await launchStealthContext(userDataDir);
     const page = context.pages()[0] || await context.newPage();  
 

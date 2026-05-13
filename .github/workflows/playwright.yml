@@ -26,6 +26,9 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
+    - name: Create user data directory
+      run: mkdir -p user_data
+
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
 

@@ -4,7 +4,7 @@ import { ProductCatalogPage } from '../pages/ProductCatalogPage';
 import { launchStealthContext } from '../utils/browserFactory';
 
 test('Escenario: Búsqueda dinámica de PlayStation 5', async () => {
-  const userDataDir = 'C:/Users/LazYW/Documents/user_data';
+  const userDataDir = '.user_data';
   const context = await launchStealthContext(userDataDir);
 
   

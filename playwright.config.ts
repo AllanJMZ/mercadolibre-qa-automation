@@ -25,8 +25,9 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    headless: true,
-    viewport: null,
+    headless: true, // Forzado para CI
+    viewport: { width: 1280, height: 720 },
+    ignoreHTTPSErrors: true,
     launchOptions: {
       args: ['--start-maximized'] 
     },

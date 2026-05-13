@@ -25,9 +25,10 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    headless: true,
     viewport: null,
     launchOptions: {
-      args: ['--start-maximized'] // Útil para modo headed
+      args: ['--start-maximized'] 
     },
     screenshot: 'only-on-failure',
     trace: 'on',

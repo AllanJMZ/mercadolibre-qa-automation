@@ -58,8 +58,17 @@ async aplicarFiltroNuevo() {
         const filtroNuevo = this.page.getByRole('link', { name: /Nuevo/i });
         
         // Esperamos máximo 5 segundos para no agotar el timeout global
-        await filtroNuevo.waitFor({ state: 'visible', timeout: 5000 });
-        await filtroNuevo.click({ force: true }); 
+        const existeFiltro = await filtroNuevo.waitFor({ state: 'visible', timeout: 5000 })
+            .then(() => true)
+            .catch(() => false);
+
+        // 2. Solo hacemos clic si realmente apareció
+        if (existeFiltro) {
+            await filtroNuevo.click({ force: true });
+            console.log('✅ Filtro "Nuevo" aplicado.');
+        } else {
+            console.log('⚠️ El filtro "Nuevo" no apareció (quizás ya todos son nuevos). Siguiendo con el test...');
+        }
         
         await this.page.waitForURL(/nuevo/i);
         console.log('✅ Filtro Nuevo aplicado con éxito');

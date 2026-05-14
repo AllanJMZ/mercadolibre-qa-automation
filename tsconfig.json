@@ -3,7 +3,8 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "commonjs",
-    "moduleResolution": "node",
+    "moduleResolution": "node10",
+    "ignoreDeprecations": "6.0",
     "typeRoots": ["./node_modules/@types"],
     "types": ["node"],
     "strict": true,

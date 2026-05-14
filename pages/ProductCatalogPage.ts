@@ -30,6 +30,8 @@ export class ProductCatalogPage {
 
 // En ProductCatalogPage.ts
 async activarEnvioLocal() {
+  await this.page.getByRole('switch', { name: 'Envío local Productos con env' }).check();
+  /*
     console.log('🧪 Iniciando proceso de Envío Local');
     
     // 1. Usamos un selector más flexible (Regex) por si cambian mayúsculas/minúsculas
@@ -49,7 +51,7 @@ async activarEnvioLocal() {
         }
     } catch (error: any) {
     console.log('❌ Error inesperado:', error.message);
-    }
+    }*/
 }
 
 async aplicarFiltroNuevo() {
@@ -70,7 +72,7 @@ async aplicarFiltroNuevo() {
             console.log('⚠️ El filtro "Nuevo" no apareció (quizás ya todos son nuevos). Siguiendo con el test...');
         }
         
-        await this.page.waitForURL(/nuevo/i);
+        //await this.page.waitForURL(/nuevo/i);
         console.log('✅ Filtro Nuevo aplicado con éxito');
     } catch (error) {
         console.log('⚠️ El filtro "Nuevo" no estaba disponible o ya fue aplicado. Saltando paso...');

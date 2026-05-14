@@ -18,8 +18,8 @@ test('Escenario: Búsqueda dinámica de PlayStation 5', async () => {
   await mlPage.seleccionarPais('México');
   //Busqueda dinamica de producto NINTENDO, XBOX, PLAYSTATION....
   await mlPage.buscarProducto('playstation 5');
-  await mlPage.productosLocales();
-  await mlPage.aplicarFiltros();
+  await mlPage.activarEnvioLocal();
+  await mlPage.aplicarFiltroNuevo();
   await mlPage.obtenerTopResultados(5);
 
   //Pausar el escenario para la deteccion de la ultima pantalla

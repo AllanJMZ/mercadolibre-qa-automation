@@ -18,8 +18,8 @@ test('Escenario: Validaciones de Calidad (Visual, Accesibilidad y Perf)', async 
     await page.goto('https://www.mercadolibre.com/');
     await mlPage.seleccionarPais('México');
     await mlPage.buscarProducto('playstation 5');
-    await mlPage.productosLocales();
-    await mlPage.aplicarFiltros();
+    await mlPage.activarEnvioLocal();
+    await mlPage.aplicarFiltroNuevo();
     await mlPage.obtenerTopResultados(5);
 
   // 3. Regresión Visual

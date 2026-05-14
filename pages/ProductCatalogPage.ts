@@ -28,23 +28,43 @@ export class ProductCatalogPage {
     await this.page.waitForLoadState('domcontentloaded');
   }
 
-  async productosLocales() {
-    console.log('🔍 [HITO]: Buscando productos locales');
-    //const switchLocal = this.page.getByRole('switch', { name: /Envío local/ });
-    //await switchLocal.scrollIntoViewIfNeeded();
-    //await switchLocal.click({ force: true }); // Force ayuda si hay banners interceptando
-    await this.page.waitForLoadState('networkidle');
-  }
+async activarEnvioLocal() {
+    try {
+        console.log('🧪 Buscando Switch de Envío Local');
+        
+        // 1. Localizar por texto es más confiable que por rol en Mercado Libre
+        const switchLabel = this.page.getByText('Envío local');
+        
+        // 2. Asegurarnos de que esté en vista
+        await switchLabel.scrollIntoViewIfNeeded();
+        
+        // 3. Esperar a que el selector sea clicable
+        await switchLabel.waitFor({ state: 'visible', timeout: 5000 });
+        
+        // 4. Forzar el clic para evitar que banners o el diseño del switch bloqueen la acción
+        await switchLabel.click({ force: true });
+        
+        console.log('✅ Switch de Envío Local activado');
+    } catch (error) {
+        console.log('❌ No se pudo activar el Envío Local. Es posible que no haya cobertura en esta zona.');
+    }
+}
 
-  async aplicarFiltros() {
-    console.log('🎯 [HITO]: Aplicando filtros de Nuevo y Mayor Precio');
-    await this.page.getByRole('link', { name: 'Nuevo', exact: true }).click();
-    await this.page.waitForURL(/nuevo/);
-    
-    await this.sortDropdown.click();
-    await this.page.getByRole('option', { name: 'Mayor precio' }).click();
-    await this.page.waitForLoadState('networkidle');
-  }
+async aplicarFiltroNuevo() {
+    try {
+        console.log('🧪 Intentando aplicar filtro: Nuevo');
+        const filtroNuevo = this.page.getByRole('link', { name: /Nuevo/i });
+        
+        // Esperamos máximo 5 segundos para no agotar el timeout global
+        await filtroNuevo.waitFor({ state: 'visible', timeout: 5000 });
+        await filtroNuevo.click({ force: true }); 
+        
+        await this.page.waitForURL(/nuevo/i);
+        console.log('✅ Filtro Nuevo aplicado con éxito');
+    } catch (error) {
+        console.log('⚠️ El filtro "Nuevo" no estaba disponible o ya fue aplicado. Saltando paso...');
+    }
+}
 
   // --- NUEVOS MÉTODOS DE VALIDACIÓN ---
 

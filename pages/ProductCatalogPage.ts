@@ -17,7 +17,7 @@ export class ProductCatalogPage {
   async seleccionarPais(pais: string) {
     console.log(`🌍 [HITO]: Seleccionando país "${pais}"`);
     await this.page.getByRole('link', { name: pais, exact: true }).click();
-    //await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('networkidle');
   }
 
   async buscarProducto(producto: string) {

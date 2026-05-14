@@ -1,0 +1,47 @@
+name: Playwright Tests
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch: 
+
+
+# 1. Definimos la variable de entorno global para silenciar avisos de Node 20
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '24' # Forzamos la versión 24 para el entorno de ejecución
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Create user data directory
+      run: mkdir -p user_data
+
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+
+    - name: Run Playwright tests
+      # Mantenemos la ejecución. Si falla por CAPTCHA, el reporte se subirá igual.
+      run: npx playwright test
+
+    - name: Upload HTML Report
+      uses: actions/upload-artifact@v4
+      if: always() # Garantiza que el reporte suba aunque el test falle
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30

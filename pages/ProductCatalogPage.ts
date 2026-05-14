@@ -17,7 +17,7 @@ export class ProductCatalogPage {
   async seleccionarPais(pais: string) {
     console.log(`🌍 [HITO]: Seleccionando país "${pais}"`);
     await this.page.getByRole('link', { name: pais, exact: true }).click();
-    await this.page.waitForLoadState('networkidle');
+    //await this.page.waitForLoadState('networkidle');
   }
 
   async buscarProducto(producto: string) {
@@ -31,8 +31,8 @@ export class ProductCatalogPage {
   async productosLocales() {
     console.log('🔍 [HITO]: Buscando productos locales');
     //const switchLocal = this.page.getByRole('switch', { name: /Envío local/ });
-    await switchLocal.scrollIntoViewIfNeeded();
-    await switchLocal.click({ force: true }); // Force ayuda si hay banners interceptando
+    //await switchLocal.scrollIntoViewIfNeeded();
+    //await switchLocal.click({ force: true }); // Force ayuda si hay banners interceptando
     await this.page.waitForLoadState('networkidle');
   }
 

@@ -28,25 +28,27 @@ export class ProductCatalogPage {
     await this.page.waitForLoadState('domcontentloaded');
   }
 
+// En ProductCatalogPage.ts
 async activarEnvioLocal() {
+    console.log('🧪 Iniciando proceso de Envío Local');
+    
+    // 1. Usamos un selector más flexible (Regex) por si cambian mayúsculas/minúsculas
+    const switchLabel = this.page.getByText(/Envío local/i);
+
     try {
-        console.log('🧪 Buscando Switch de Envío Local');
-        
-        // 1. Localizar por texto es más confiable que por rol en Mercado Libre
-        const switchLabel = this.page.getByText('Envío local');
-        
-        // 2. Asegurarnos de que esté en vista
-        await switchLabel.scrollIntoViewIfNeeded();
-        
-        // 3. Esperar a que el selector sea clicable
-        await switchLabel.waitFor({ state: 'visible', timeout: 5000 });
-        
-        // 4. Forzar el clic para evitar que banners o el diseño del switch bloqueen la acción
-        await switchLabel.click({ force: true });
-        
-        console.log('✅ Switch de Envío Local activado');
-    } catch (error) {
-        console.log('❌ No se pudo activar el Envío Local. Es posible que no haya cobertura en esta zona.');
+        // 2. LA CLAVE: Verificar si el elemento existe antes de intentar cualquier acción
+        // Ponemos un timeout muy corto (2 segundos) para no perder tiempo
+        const existe = await switchLabel.isVisible({ timeout: 2000 }).catch(() => false);
+
+        if (existe) {
+            await switchLabel.scrollIntoViewIfNeeded();
+            await switchLabel.click({ force: true });
+            console.log('✅ Switch de Envío Local activado con éxito');
+        } else {
+            console.log('⚠️ El elemento "Envío local" no está en el DOM. Saltando paso...');
+        }
+    } catch (error: any) {
+    console.log('❌ Error inesperado:', error.message);
     }
 }
 

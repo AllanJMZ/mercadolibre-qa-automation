@@ -4,6 +4,7 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+    workflow_dispatch:
 
 # 1. Definimos la variable de entorno global para silenciar avisos de Node 20
 env:

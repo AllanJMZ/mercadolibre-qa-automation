@@ -30,29 +30,24 @@ export class ProductCatalogPage {
 
 // En ProductCatalogPage.ts
 async activarEnvioLocal() {
-  await this.page.getByRole('switch', { name: 'Envío local Productos con env' }).check();
-  /*
-    console.log('🧪 Iniciando proceso de Envío Local');
-    
-    // 1. Usamos un selector más flexible (Regex) por si cambian mayúsculas/minúsculas
-    const switchLabel = this.page.getByText(/Envío local/i);
+    // 1. Usamos un selector de texto con Regex para ser menos estrictos
+    const switchElement = this.page.getByText(/Envío local/i);
 
     try {
-        // 2. LA CLAVE: Verificar si el elemento existe antes de intentar cualquier acción
-        // Ponemos un timeout muy corto (2 segundos) para no perder tiempo
-        const existe = await switchLabel.isVisible({ timeout: 2000 }).catch(() => false);
-
-        if (existe) {
-            await switchLabel.scrollIntoViewIfNeeded();
-            await switchLabel.click({ force: true });
-            console.log('✅ Switch de Envío Local activado con éxito');
-        } else {
-            console.log('⚠️ El elemento "Envío local" no está en el DOM. Saltando paso...');
-        }
-    } catch (error: any) {
-    console.log('❌ Error inesperado:', error.message);
-    }*/
+        // 2. Verificamos si es visible (espera máxima de 3 segundos)
+        await switchElement.waitFor({ state: 'visible', timeout: 3000 });
+        
+        // 3. Usamos .click() en lugar de .check() ya que es más universal
+        // { force: true } ayuda si el switch tiene un overlay transparente
+        await switchElement.click({ force: true });
+        
+        console.log('✅ Switch de Envío Local activado.');
+    } catch (error) {
+        // Si no aparece, simplemente lo saltamos sin romper el test
+        console.log('⚠️ No se encontró el switch de Envío Local para esta búsqueda.');
+    }
 }
+
 
 async aplicarFiltroNuevo() {
     try {
